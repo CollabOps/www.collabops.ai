@@ -41,6 +41,9 @@ firebase deploy
    - Firebase에서 제공하는 DNS 레코드 추가
    - SSL 인증서 자동 발급 대기
 
+## Email 관리
+* Formspree 에서 설정
+
 ## 📝 라이선스
 
 © 2025 CollabOps.AI. All rights reserved.
