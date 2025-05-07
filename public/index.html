@@ -502,8 +502,8 @@
                     <div class="countdown">COMING SOON</div>
                     
                     <div class="form-container">
-                        <form class="email-form">
-                            <input type="email" class="email-input" placeholder="이메일 주소를 입력하세요" required>
+                        <form class="email-form" action="https://formspree.io/f/movdwqbw" method="POST">
+                            <input type="email" name="email" class="email-input" placeholder="이메일 주소를 입력하세요" required>
                             <button type="submit" class="submit-btn">알림 받기</button>
                         </form>
                         <p class="privacy-text">* 정식 출시 소식을 가장 먼저 알려드립니다.</p>
@@ -592,16 +592,32 @@
         window.onload = function() {
             setTimeout(typeEffect, 1000);
             
-            // 이메일 폼 핸들링 (실제 서비스에서는 백엔드 연동 필요)
+            // 이메일 폼 핸들링 부분을 수정합니다
             const emailForm = document.querySelector('.email-form');
             const emailInput = document.querySelector('.email-input');
             
             emailForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                if(emailInput.value) {
-                    alert('알림 신청이 완료되었습니다. 출시 소식을 가장 먼저 알려드리겠습니다!');
-                    emailInput.value = '';
-                }
+                
+                // Formspree로 데이터 전송
+                fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('알림 신청이 완료되었습니다. 출시 소식을 가장 먼저 알려드리겠습니다!');
+                        emailInput.value = '';
+                    } else {
+                        throw new Error('Something went wrong');
+                    }
+                })
+                .catch(error => {
+                    alert('죄송합니다. 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                });
             });
         }
     </script>
